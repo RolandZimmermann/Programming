@@ -8,7 +8,7 @@ public class Control {
 
 	private GUI gui;
 	private Player player = Player.PLAYER_1;
-	private int input = 0;;
+	private int input = 0;
 	
 	public Control(GUI gui) {
 		this.gui = gui;

@@ -30,7 +30,6 @@ public class GUI {
 		emptyConsole();
 		
 		System.out.println(INFO);
-		System.out.println();
 		
 		for(int y = 0; y < ROW; y++) {
 			for(int x = 0; x < COLUMN; x++) {
