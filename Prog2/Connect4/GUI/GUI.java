@@ -1,7 +1,5 @@
 package GUI;
 
-import Control.*;
-
 public class GUI {
 	
 	private final int ROW = 6;
@@ -49,15 +47,6 @@ public class GUI {
 		}
 	}
 	
-	public void updateField(int input, Player player) {
-		for(int i = ROW-1; i >= 0; i--) {
-			if (field[i][input] == EMPTY) {
-				field[i][input] = (player == Player.PLAYER_1) ? PLAYER_1 : PLAYER_2;
-				return;
-			}
-		}
-	}
-
 	public char[][] getField() {
 		return field;
 	}

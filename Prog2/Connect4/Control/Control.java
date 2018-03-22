@@ -2,23 +2,23 @@ package Control;
 
 import java.io.IOException;
 
-import AI.AlphaBetaAI;
+import AI.AI;
 import GUI.GUI;
 
 public class Control {
 
 	private GUI gui;
 	private Player player = Player.PLAYER_1;
-	private int input = 0;
-	private AlphaBetaAI ai;
+	private Player aiPlayer = (player == Player.PLAYER_1) ? Player.PLAYER_2 : Player.PLAYER_1;
+	private AI ai;
 	
 	public Control(GUI gui) {
 		this.gui = gui;
-		createAlphaBetaAI();
+		createAI();
 	}
 	
 	public void input() throws IOException {
-		input = System.in.read();
+		int input = System.in.read();
 		System.in.read();
 		System.in.read();
 		
@@ -26,13 +26,21 @@ public class Control {
 			outputPossibleMoves();
 			return;
 		}
+		if (input == 'p') {
+			System.out.println(ai.evaluateField(player));
+			return;
+		}
+		
+		if (input == 'a') {
+			ai.makeMove();
+			return;
+		}
 		
 		
-		input -= '0';
-		input--;
+		input -= '1';
 		for(int i = gui.getROW()-1; i >= 0; i--) {
 			if (gui.getField()[i][input] == gui.getEMPTY()) {
-				updateInput();
+				updateField(input);
 				return;
 			}
 		}
@@ -40,13 +48,30 @@ public class Control {
 		input();
 	}
 	
-	public void updateInput() {
-		gui.updateField(input, player);
-		player = (player == Player.PLAYER_1) ? Player.PLAYER_2 : Player.PLAYER_1;
+	public void updateField(int input) {
+		for(int i = gui.getROW()-1; i >= 0; i--) {
+			if (gui.getField()[i][input] == gui.getEMPTY()) {
+				gui.getField()[i][input] = (player == Player.PLAYER_1) ? gui.getPLAYER_1() : gui.getPLAYER_2();
+				player = (player == Player.PLAYER_1) ? Player.PLAYER_2 : Player.PLAYER_1;
+				return;
+			}
+		}
+		
 	}
 	
-	public void createAlphaBetaAI() {
-		this.ai = new AlphaBetaAI(this.gui);
+	public void undoMove(int input) {
+		for(int i = 0; i < gui.getROW(); i++) {
+			if (gui.getField()[i][input] != gui.getEMPTY()) {
+				gui.getField()[i][input] = gui.getEMPTY();
+				player = (player == Player.PLAYER_1) ? Player.PLAYER_2 : Player.PLAYER_1;
+				return;
+			}
+		}
+		
+	}
+	
+	public void createAI() {
+		this.ai = new AI(this.gui,this);
 	}
 	
 	public void outputPossibleMoves() {
@@ -58,6 +83,14 @@ public class Control {
 			}
 		}
 		System.out.println(counter);
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public Player getAiPlayer() {
+		return aiPlayer;
 	}
 	
 	
