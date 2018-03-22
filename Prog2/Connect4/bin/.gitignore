@@ -4,3 +4,6 @@
 /GUI/
 /Game/
 /Control/
+/AI/
+/MinMaxAI.class
+/AlphaBetaAI.class

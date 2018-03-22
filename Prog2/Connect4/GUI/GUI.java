@@ -66,6 +66,10 @@ public class GUI {
 		return ROW;
 	}
 
+	public int getCOLUMN() {
+		return COLUMN;
+	}
+
 	public char getEMPTY() {
 		return EMPTY;
 	}
