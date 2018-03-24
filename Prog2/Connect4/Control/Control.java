@@ -1,6 +1,7 @@
 package Control;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 import AI.AI;
 import GUI.GUI;
@@ -10,12 +11,12 @@ public class Control {
 	private GUI gui;
 	private Player player = Player.PLAYER_1;
 	private Player aiPlayer = (player == Player.PLAYER_1) ? Player.PLAYER_2 : Player.PLAYER_1;
-	private AI ai;
+	private int aiStrength = 4;
+	private AI ai = createAI(aiStrength);
 	private boolean gameOver;
 
 	public Control() {
 		this.gui = new GUI();
-		createAI();
 	}
 
 	public void startGame() throws IOException {
@@ -30,20 +31,20 @@ public class Control {
 			manageWin();
 			input();
 		}
-		
+
 	}
-	
+
 	public void resetGame() {
-		//this.gui = new GUI();
-		//gameOver == false 
-		//startGae aufrufen
-		
+		// this.gui = new GUI();
+		// gameOver == false
+		// startGae aufrufen
+
 	}
 
 	public int getInput() throws IOException {
-		int input = System.in.read();
-		System.in.read();
-		System.in.read();
+		Scanner s = new Scanner(System.in);
+
+		int input = s.next().charAt(0);
 
 		return input;
 	}
@@ -64,8 +65,8 @@ public class Control {
 			ai.makeMove();
 			return;
 		}
-		
-		//input taste r und after winning screen a reset screen 
+
+		// input taste r und after winning screen a reset screen
 
 		if (input >= '1' && input <= '7') {
 			input -= '1';
@@ -102,8 +103,8 @@ public class Control {
 
 	}
 
-	public void createAI() {
-		this.ai = new AI(this.gui, this);
+	public AI createAI(int aiStrength) {
+		return new AI(this.gui, this, aiStrength);
 	}
 
 	public void outputPossibleMoves() {
@@ -183,12 +184,14 @@ public class Control {
 		for (int i = 0; i < gui.getROW(); i++) {
 			for (int j = 0; j < gui.getCOLUMN(); j++) {
 				if (gui.getField()[i][j] == gui.getPLAYER_1()) {
-					if (checkDiagonalWinRight(i, j, gui.getPLAYER_1(), 1) == 1 || checkDiagonalWinLeft(i, j, gui.getPLAYER_1(), 1) ==1) {
+					if (checkDiagonalWinRight(i, j, gui.getPLAYER_1(), 0) == 1
+							|| checkDiagonalWinLeft(i, j, gui.getPLAYER_1(), 0) == 1) {
 						return 1;
 					}
 				}
 				if (gui.getField()[i][j] == gui.getPLAYER_2()) {
-					if (checkDiagonalWinRight(i, j, gui.getPLAYER_2(), 1) == 2 || checkDiagonalWinLeft(i, j, gui.getPLAYER_2(), 1) ==2) {
+					if (checkDiagonalWinRight(i, j, gui.getPLAYER_2(), 0) == 2
+							|| checkDiagonalWinLeft(i, j, gui.getPLAYER_2(), 0) == 2) {
 						return 2;
 					}
 				}
@@ -197,10 +200,10 @@ public class Control {
 
 		int counterDraw = 0;
 
-		for (int i = 0; i < gui.getROW(); i++) {
+		for (int i = 0; i < gui.getCOLUMN(); i++) {
 			if (gui.getField()[0][i] != gui.getEMPTY()) {
 				counterDraw++;
-				if (counterDraw == gui.getROW()) {
+				if (counterDraw == gui.getCOLUMN()) {
 					return 0;
 				}
 			}
@@ -209,28 +212,26 @@ public class Control {
 	}
 
 	private int checkDiagonalWinRight(int row, int column, char player, int counter) {
-		if (counter == 4) {
-			return (player == gui.getPLAYER_1()) ? 1 : 2;
+		if (gui.getField()[row][column] == player) {
+			++counter;
+			if (counter == 4) {
+				return (player == gui.getPLAYER_1()) ? 1 : 2;
+			}
+			if (row + 1 < gui.getROW() && column + 1 < gui.getCOLUMN())
+				return checkDiagonalWinRight(row + 1, column + 1, player, counter);
 		}
-
-				if (gui.getField()[row][column] == player) {
-					counter++;
-					if (row + 1 < gui.getROW() && column + 1 < gui.getCOLUMN()) 
-					return checkDiagonalWinRight(row+1, column+1, player, counter);
-				}
 		return -1;
 	}
-	
-	private int checkDiagonalWinLeft(int row, int column, char player, int counter) {
-		if (counter == 4) {
-			return (player == gui.getPLAYER_1()) ? 1 : 2;
-		}
 
-				if (gui.getField()[row][column] == player) {
-					counter++;
-					if (row + 1 < gui.getROW() && column - 1 >= 0) 
-					return checkDiagonalWinLeft(row+1, column-1, player, counter);
-				}
+	private int checkDiagonalWinLeft(int row, int column, char player, int counter) {
+		if (gui.getField()[row][column] == player) {
+			++counter;
+			if (counter == 4) {
+				return (player == gui.getPLAYER_1()) ? 1 : 2;
+			}
+			if (row + 1 < gui.getROW() && column - 1 >= 0)
+				return checkDiagonalWinLeft(row + 1, column - 1, player, counter);
+		}
 		return -1;
 	}
 
