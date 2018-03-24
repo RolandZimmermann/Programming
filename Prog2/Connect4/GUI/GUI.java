@@ -47,6 +47,19 @@ public class GUI {
 		}
 	}
 	
+	public void displayWin(int status) {
+		
+		if (status == 1) {
+			System.out.println("Player 1 won!");
+		}
+		else if (status == 2) {
+			System.out.println("Player 2 won!");
+		}
+		else if (status == 0) {
+			System.out.println("Draw!");
+		}	
+	}
+	
 	public char[][] getField() {
 		return field;
 	}
@@ -69,5 +82,9 @@ public class GUI {
 
 	public char getPLAYER_2() {
 		return PLAYER_2;
+	}
+
+	public String getINFO() {
+		return INFO;
 	}
 }

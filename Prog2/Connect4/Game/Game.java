@@ -9,15 +9,13 @@ public class Game {
 
 	public static void main(String[] args) throws IOException {
 		
-		GUI gui = new GUI();
-		Control control = new Control(gui);
+		Control control = new Control();
 		
-		while(true) {
-			gui.drawField();
-			control.input();
-		}
+		control.startGame();
 		
-		//TODO: Only accept inputs between 1 and 7
+		//TODO: DiagonalLeft + Input check, Main Menu: Text- made by Kim & Roland (evtl nachname), AI, create class diagramm & sequenz diagramm,
+		
+		
 	}
 
 }
