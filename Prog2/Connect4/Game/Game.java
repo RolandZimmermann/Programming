@@ -13,7 +13,7 @@ public class Game {
 		
 		control.startGame();
 		
-		//TODO: DiagonalLeft + Input check, Main Menu: Text- made by Kim & Roland (evtl nachname), AI, create class diagramm & sequenz diagramm,
+		//TODO: Main Menu: Text- made by Kim & Roland (evtl nachname), create class diagramm & sequenz diagramm,
 		
 		
 	}

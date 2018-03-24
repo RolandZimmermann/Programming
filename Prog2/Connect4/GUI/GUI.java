@@ -10,7 +10,8 @@ public class GUI {
 	private final char PLAYER_1 = 'X';
 	private final char PLAYER_2 = 'O';
 	
-	private String INFO = "1234567";
+	private final String INFO = " 1 2 3 4 5 6 7 ";
+	private char playerTurn = 'X';
 	
 	public GUI() {
 		createField();
@@ -27,11 +28,17 @@ public class GUI {
 	public void drawField() {
 		emptyConsole();
 		
+		System.out.println("Turn of Player: " + ((playerTurn == PLAYER_1) ? "Player 1" : "Player 2"));
+		System.out.println();
 		System.out.println(INFO);
 		
 		for(int y = 0; y < ROW; y++) {
 			for(int x = 0; x < COLUMN; x++) {
+				if(x == 0) {
+					System.out.print('|');
+				}
 				System.out.print(field[y][x]);
+				System.out.print('|');
 			}
 			System.out.println();
 		}
@@ -86,5 +93,9 @@ public class GUI {
 
 	public String getINFO() {
 		return INFO;
+	}
+
+	public void setPlayerTurnGUI(char playerTurn) {
+		this.playerTurn = playerTurn;
 	}
 }

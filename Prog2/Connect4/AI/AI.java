@@ -14,8 +14,8 @@ public class AI {
 			{ 5, 8, 11, 13, 11, 8, 5 }, { 4, 6, 8, 10, 8, 6, 4 }, { 3, 4, 5, 7, 5, 4, 3 } };
 
 	public AI(GUI gui, Control control, int maxDepth) {
-		this.field = gui.getField();
 		this.gui = gui;
+		this.field = gui.getField();
 		this.control = control;
 		this.maxDepth = maxDepth;
 	}

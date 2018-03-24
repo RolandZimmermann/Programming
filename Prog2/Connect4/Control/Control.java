@@ -8,28 +8,51 @@ import GUI.GUI;
 
 public class Control {
 
-	private GUI gui;
+	private GUI gui = new GUI();
 	private Player player = Player.PLAYER_1;
 	private Player aiPlayer = (player == Player.PLAYER_1) ? Player.PLAYER_2 : Player.PLAYER_1;
 	private int aiStrength = 4;
-	private AI ai = createAI(aiStrength);
+	private AI ai;
 	private boolean gameOver;
-
-	public Control() {
-		this.gui = new GUI();
-	}
+	private int gameMode = 1;
 
 	public void startGame() throws IOException {
 		/*
 		 * 
 		 * MAIN MENU
 		 * 
+		 * Maybe select gameMode?
+		 * gameMode = 0 -> P v P
+		 * gameMode = 1 -> P V C
+		 * 
+		 * if (P v C)
+		 * Maybe select difficulty Level?
+		 * (1) Very Easy
+		 * (2) Easy
+		 * (3) Medium
+		 * (4) Hard
+		 * (5) Very Hard
+		 * (6) Extreme
+		 * (7) Impossible
+		 * 
+		 * --> set aiStrength to selection 1-7 to selection + 1:
+		 * 	aiStrength = input+1;
+		 * 		
+		 *
 		 */
+		
+		if(gameMode == 1) {
+			this.ai = createAI();
+		}
 
 		while (gameOver == false) {
+			gui.setPlayerTurnGUI((player == Player.PLAYER_1) ? gui.getPLAYER_1(): gui.getPLAYER_2());
 			gui.drawField();
 			manageWin();
 			input();
+			if (gameMode == 1) {
+				ai.makeMove();
+			}
 		}
 
 	}
@@ -51,20 +74,6 @@ public class Control {
 
 	public void input() throws IOException {
 		int input = getInput();
-
-		if (input == 'w') {
-			outputPossibleMoves();
-			return;
-		}
-		if (input == 'p') {
-			System.out.println(ai.evaluateField(player));
-			return;
-		}
-
-		if (input == 'a') {
-			ai.makeMove();
-			return;
-		}
 
 		// input taste r und after winning screen a reset screen
 
@@ -103,19 +112,8 @@ public class Control {
 
 	}
 
-	public AI createAI(int aiStrength) {
+	public AI createAI() {
 		return new AI(this.gui, this, aiStrength);
-	}
-
-	public void outputPossibleMoves() {
-		int[] moves = ai.possibleMoves();
-		int counter = 0;
-		for (int i = 0; i < moves.length; i++) {
-			if (moves[i] == 1) {
-				counter++;
-			}
-		}
-		System.out.println(counter);
 	}
 
 	public int checkWin() {
