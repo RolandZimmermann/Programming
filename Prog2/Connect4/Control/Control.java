@@ -228,8 +228,8 @@ public class Control {
 
 				if (gui.getField()[row][column] == player) {
 					counter++;
-					if (row - 1 < gui.getROW() && column - 1 >= 0) 
-					return checkDiagonalWinLeft(row-1, column-1, player, counter);
+					if (row + 1 < gui.getROW() && column - 1 >= 0) 
+					return checkDiagonalWinLeft(row+1, column-1, player, counter);
 				}
 		return -1;
 	}
