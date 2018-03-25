@@ -51,6 +51,9 @@ public class Control {
 			manageWin();
 			input();
 			if (gameMode == 1) {
+				gui.setPlayerTurnGUI((player == Player.PLAYER_1) ? gui.getPLAYER_1(): gui.getPLAYER_2());
+				gui.drawField();
+				manageWin();
 				ai.makeMove();
 			}
 		}

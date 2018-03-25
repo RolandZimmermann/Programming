@@ -60,7 +60,6 @@ public class AI {
 		return (player == Player.PLAYER_1) ? (scorePlayer1 - scorePlayer2) : (scorePlayer2 - scorePlayer1);
 	}
 
-	// TODO: check if move is winning move;
 	public void makeMove() {
 		int value = max(maxDepth,Integer.MIN_VALUE,Integer.MAX_VALUE);
 		control.updateField(nextMove);
