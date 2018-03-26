@@ -59,6 +59,7 @@ public class Control {
 		this.gui = new GUI();
 		gameOver = false;
 		gameMode = 0;
+		player = Player.PLAYER_1;
 		startGame();
 	}
 
