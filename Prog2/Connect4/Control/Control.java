@@ -14,39 +14,33 @@ public class Control {
 	private int aiStrength = 4;
 	private AI ai;
 	private boolean gameOver;
-	private int gameMode = 1;
+	private int gameMode = 0;
 
 	public void startGame() throws IOException {
 		/*
 		 * 
 		 * MAIN MENU
 		 * 
-		 * Maybe select gameMode?
-		 * gameMode = 0 -> P v P
-		 * gameMode = 1 -> P V C
+		 * Maybe select gameMode? gameMode = 0 -> P v P gameMode = 1 -> P V C
 		 * 
-		 * if (P v C)
-		 * Maybe select difficulty Level?
-		 * (1) Very Easy
-		 * (2) Easy
-		 * (3) Medium
-		 * (4) Hard
-		 * (5) Very Hard
-		 * (6) Extreme
-		 * (7) Impossible
+		 * if (P v C) Maybe select difficulty Level? (1) Very Easy (2) Easy (3) Medium
+		 * (4) Hard (5) Very Hard (6) Extreme (7) Impossible
 		 * 
-		 * --> set aiStrength to selection 1-7 to selection + 1:
-		 * 	aiStrength = input+1;
-		 * 		
+		 * --> set aiStrength to selection 1-7 to selection + 1: aiStrength = input+1;
+		 * 
 		 *
 		 */
-		
-		if(gameMode == 1) {
+
+		gui.createMainMenu();
+
+		input();
+
+		if (gameMode == 1) {
 			this.ai = createAI();
 		}
 
 		while (gameOver == false) {
-			gui.setPlayerTurnGUI((player == Player.PLAYER_1) ? gui.getPLAYER_1(): gui.getPLAYER_2());
+			gui.setPlayerTurnGUI((player == Player.PLAYER_1) ? gui.getPLAYER_1() : gui.getPLAYER_2());
 			gui.drawField();
 			manageWin();
 			input();
@@ -60,11 +54,12 @@ public class Control {
 
 	}
 
-	public void resetGame() {
-		// this.gui = new GUI();
-		// gameOver == false
-		// startGae aufrufen
+	public void resetGame() throws IOException {
 
+		this.gui = new GUI();
+		gameOver = false;
+		gameMode = 0;
+		startGame();
 	}
 
 	public int getInput() throws IOException {
@@ -78,14 +73,49 @@ public class Control {
 	public void input() throws IOException {
 		int input = getInput();
 
-		// input taste r und after winning screen a reset screen
+		if (gameMode == 0) {
 
-		if (input >= '1' && input <= '7') {
-			input -= '1';
-			for (int i = gui.getROW() - 1; i >= 0; i--) {
-				if (gui.getField()[i][input] == gui.getEMPTY()) {
-					updateField(input);
-					return;
+			if (input == '1') {
+				gameMode = 2;
+				return;
+			}
+			if (input == '2') {
+				gameMode = 3;
+				gui.displayAISelection();
+				input();
+				return;
+			}
+		}
+
+		if (gameMode == 3) {
+			if (input == 'r') {
+				resetGame();
+				return;
+			}
+			if (input >= '1' && input <= '4') {
+				aiStrength = input - '0';
+				aiStrength += 1;
+				gameMode = 1;
+				return;
+			}
+			
+		}
+
+		if (gameMode == 1 || gameMode == 2) {
+
+			if (input == 'r' || input == 'R') {
+				resetGame();
+				return;
+			}
+
+			if (input >= '1' && input <= '7') {
+				input -= '1';
+				for (int i = gui.getROW() - 1; i >= 0; i--) {
+					if (gui.getField()[i][input] == gui.getEMPTY()) {
+						updateField(input);
+						return;
+
+					}
 				}
 			}
 		}

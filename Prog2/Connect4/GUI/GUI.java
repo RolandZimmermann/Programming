@@ -1,40 +1,40 @@
 package GUI;
 
 public class GUI {
-	
+
 	private final int ROW = 6;
 	private final int COLUMN = 7;
 	private char[][] field = new char[ROW][COLUMN];
-	
+
 	private final char EMPTY = '.';
 	private final char PLAYER_1 = 'X';
 	private final char PLAYER_2 = 'O';
-	
+
 	private final String INFO = " 1 2 3 4 5 6 7 ";
 	private char playerTurn = 'X';
-	
+
 	public GUI() {
 		createField();
 	}
-	
+
 	private void createField() {
-		for(int y = 0; y < ROW; y++) {
-			for(int x = 0; x < COLUMN; x++) {
+		for (int y = 0; y < ROW; y++) {
+			for (int x = 0; x < COLUMN; x++) {
 				field[y][x] = EMPTY;
 			}
 		}
 	}
-	
+
 	public void drawField() {
 		emptyConsole();
-		
-		System.out.println("Turn of Player: " + ((playerTurn == PLAYER_1) ? "Player 1" : "Player 2"));
+
+		System.out.println("Turn of Player: " + ((playerTurn == PLAYER_1) ? "P1 = X" : "P2 = O"));
 		System.out.println();
 		System.out.println(INFO);
-		
-		for(int y = 0; y < ROW; y++) {
-			for(int x = 0; x < COLUMN; x++) {
-				if(x == 0) {
+
+		for (int y = 0; y < ROW; y++) {
+			for (int x = 0; x < COLUMN; x++) {
+				if (x == 0) {
 					System.out.print('|');
 				}
 				System.out.print(field[y][x]);
@@ -42,31 +42,76 @@ public class GUI {
 			}
 			System.out.println();
 		}
-		
+
 		System.out.println(INFO);
 		System.out.println();
-		
+
 	}
-	
+
 	public void emptyConsole() {
-		for(int i = 0; i < 60; i++) {
+		for (int i = 0; i < 60; i++) {
 			System.out.println();
 		}
 	}
-	
-	public void displayWin(int status) {
+
+	public void createMainMenu() {
+
+		emptyConsole();
 		
-		if (status == 1) {
-			System.out.println("Player 1 won!");
-		}
-		else if (status == 2) {
-			System.out.println("Player 2 won!");
-		}
-		else if (status == 0) {
-			System.out.println("Draw!");
-		}	
+		System.out.println("**********************************************");
+		System.out.println("|             MAIN MENU SELECTION            |");
+		System.out.println("**********************************************");
+		System.out.println("|Options:                                    |");
+		System.out.println("|                                            |");
+		System.out.println("|                                            |");
+		System.out.println("|                                            |");
+		System.out.println("|        (1) Single vs. Single               |");
+		System.out.println("|                                            |");
+		System.out.println("|        (2) Single vs. Computer             |");
+		System.out.println("|                                            |");
+		System.out.println("|                                            |");
+		System.out.println("|                                            |");
+		System.out.println("|                                            |");
+		System.out.println("|   made by Kim Nguyen & Roland Zimmermann   |");
+		System.out.println("**********************************************");
 	}
 	
+	public void displayAISelection() {
+		
+		emptyConsole();
+		
+		System.out.println("**********************************************");
+		System.out.println("|             AI SELECTION                   |");
+		System.out.println("**********************************************");
+		System.out.println("|Options:                                    |");
+		System.out.println("|                                            |");
+		System.out.println("|                                            |");
+		System.out.println("|                                            |");
+		System.out.println("|        (1) Easy                            |");
+		System.out.println("|        (2) Medium                          |");
+		System.out.println("|        (3) Hard                            |");
+		System.out.println("|        (4) Very Hard                       |");
+		System.out.println("|                                            |");
+		System.out.println("|        (r) RESTART                         |");
+		System.out.println("|                                            |");
+		System.out.println("|   made by Kim Nguyen & Roland Zimmermann   |");
+		System.out.println("**********************************************");
+	}
+
+	public void displayWin(int status) {
+
+		if (status == 1) {
+			System.out.println("Player 'X' won!");
+			System.out.println("Press r to reset the game");
+		} else if (status == 2) {
+			System.out.println("Player 'O' won!");
+			System.out.println("Press r to reset the game");
+		} else if (status == 0) {
+			System.out.println("Draw!");
+			System.out.println("Press r to reset the game");
+		}
+	}
+
 	public char[][] getField() {
 		return field;
 	}

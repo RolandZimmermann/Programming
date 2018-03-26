@@ -3,7 +3,6 @@ package Game;
 import java.io.IOException;
 
 import Control.Control;
-import GUI.GUI;
 
 public class Game {
 
