@@ -38,6 +38,8 @@ public class Control {
 				ai.makeMove();
 			}
 		}
+		
+		resetGame();
 
 	}
 
