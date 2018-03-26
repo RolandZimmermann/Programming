@@ -17,19 +17,6 @@ public class Control {
 	private int gameMode = 0;
 
 	public void startGame() throws IOException {
-		/*
-		 * 
-		 * MAIN MENU
-		 * 
-		 * Maybe select gameMode? gameMode = 0 -> P v P gameMode = 1 -> P V C
-		 * 
-		 * if (P v C) Maybe select difficulty Level? (1) Very Easy (2) Easy (3) Medium
-		 * (4) Hard (5) Very Hard (6) Extreme (7) Impossible
-		 * 
-		 * --> set aiStrength to selection 1-7 to selection + 1: aiStrength = input+1;
-		 * 
-		 *
-		 */
 
 		gui.createMainMenu();
 
