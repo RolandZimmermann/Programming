@@ -52,6 +52,7 @@ public class Control {
 		startGame();
 	}
 
+	@SuppressWarnings("resource")
 	public int getInput() throws IOException {
 		Scanner s = new Scanner(System.in);
 
